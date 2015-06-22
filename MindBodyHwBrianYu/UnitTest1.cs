@@ -11,31 +11,66 @@ namespace MindBodyHwBrianYu
     [TestClass()]
     public class Driver
     {
-        IWebDriver driver;
-
+        
         [TestInitialize()]
         public void Setup()
         {
-            driver = new FirefoxDriver();
-            System.Console.WriteLine("created the page!");
+
+            string baseUrl = "http://adam.goucher.ca/parkcalc/";
+            PageProperty.driver = new FirefoxDriver();
+            PageProperty.driver.Navigate().GoToUrl(baseUrl);
         }
         [TestCleanup()]
         public void Teardown()
         {
-            driver.Quit();
+            PageProperty.driver.Quit();
         }
 
         [TestMethod]
-        public void FirstTest()
+        public void ShortTermOneHourTest()
         {
-            Assert.AreEqual(0, 1);
+            HomePage page = new HomePage();
+            page.selectLot("Short-Term Parking");
+            page.setEntryTime("10:00");
+            page.setEntryAMPM("PM");
+            page.setEntryCalendar("January", "1", "2014");
+
+            page.setExitTime("11:00");
+            page.setExitAMPM("PM");
+            page.setExitCalendar("January", "1", "2014");
+            page.calculate();
+
+            Assert.AreEqual("$ 2.00", page.getCost());
+            Assert.IsTrue(page.getDuration().Equals("​(0 Days, 1 Hours, 0 Minutes)"));
         }
 
         [TestMethod]
-        public void Sometest()
+        public void LongTermMonth()
         {
-            Assert.IsTrue(true);
+            HomePage page = new HomePage();
+            page.selectLot("Long-Term Surface Parking");
+            page.setEntryCalendar("January", "1", "2014");
+
+            page.setExitCalendar("February", "1", "2014");
+            page.calculate();
+
+            Assert.AreEqual("$ 270.00", page.getCost());
+            Assert.IsTrue(page.getDuration().Equals("​(31 Days, 0 Hours, 0 Minutes)"));
         }
+
+        [TestMethod]
+        public void exitBeforeEntryError()
+        {
+            HomePage page = new HomePage();
+            page.selectLot("Short-Term Parking");
+            page.setEntryCalendar("January", "2", "2014");
+
+            page.setExitCalendar("January", "1", "2014");
+            page.calculate();
+
+            Assert.IsTrue(page.getCost().Equals("E​RROR! YOUR EXIT DATE OR TIME IS BEFORE YOUR ENTRY DATE OR TIME"));        
+        }
+
+
     }
-    
 }
