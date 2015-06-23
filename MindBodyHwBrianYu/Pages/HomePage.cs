@@ -4,10 +4,7 @@ using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MindBodyHwBrianYu
 {
@@ -125,7 +122,6 @@ namespace MindBodyHwBrianYu
             string currentWindow = PageProperty.driver.CurrentWindowHandle;
             foreach (string handle in PageProperty.driver.WindowHandles)
             {
-                Console.WriteLine(handle);
                 if (handle != PageProperty.driver.CurrentWindowHandle)
                 {
                     PageProperty.driver.SwitchTo().Window(handle);

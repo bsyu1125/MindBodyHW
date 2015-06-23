@@ -70,10 +70,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CalendarPage.cs" />
-    <Compile Include="HomePage.cs" />
-    <Compile Include="PageProperty.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Pages\CalendarPage.cs" />
+    <Compile Include="Pages\HomePage.cs" />
+    <Compile Include="Pages\PageProperty.cs" />
+    <Compile Include="Tests\ParkingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

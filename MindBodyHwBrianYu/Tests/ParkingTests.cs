@@ -2,8 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
-
-// Requires reference to WebDriver.Support.dll
 using OpenQA.Selenium.Support.UI;
 
 namespace MindBodyHwBrianYu
@@ -15,7 +13,6 @@ namespace MindBodyHwBrianYu
         [TestInitialize()]
         public void Setup()
         {
-
             string baseUrl = "http://adam.goucher.ca/parkcalc/";
             PageProperty.driver = new FirefoxDriver();
             PageProperty.driver.Navigate().GoToUrl(baseUrl);
@@ -27,10 +24,11 @@ namespace MindBodyHwBrianYu
         }
 
         [TestMethod]
-        public void ShortTermOneHourTest()
+        public void case1()
         {
             HomePage page = new HomePage();
             page.selectLot("Short-Term Parking");
+
             page.setEntryTime("10:00");
             page.setEntryAMPM("PM");
             page.setEntryCalendar("January", "1", "2014");
@@ -38,39 +36,63 @@ namespace MindBodyHwBrianYu
             page.setExitTime("11:00");
             page.setExitAMPM("PM");
             page.setExitCalendar("January", "1", "2014");
+
             page.calculate();
 
+            string expected = "​(0 Days, 1 Hours, 0 Minutes)".Replace(((char)(8203)).ToString(), "");
             Assert.AreEqual("$ 2.00", page.getCost());
-            Assert.IsTrue(page.getDuration().Equals("​(0 Days, 1 Hours, 0 Minutes)"));
+            Assert.AreEqual(page.getDuration(), expected);
         }
 
         [TestMethod]
-        public void LongTermMonth()
+        public void case2()
         {
             HomePage page = new HomePage();
             page.selectLot("Long-Term Surface Parking");
             page.setEntryCalendar("January", "1", "2014");
-
             page.setExitCalendar("February", "1", "2014");
+
             page.calculate();
+            string expected = "​(31 Days, 0 Hours, 0 Minutes)".Replace(((char)(8203)).ToString(), "");
 
             Assert.AreEqual("$ 270.00", page.getCost());
-            Assert.IsTrue(page.getDuration().Equals("​(31 Days, 0 Hours, 0 Minutes)"));
+            Assert.AreEqual(page.getDuration(), expected);
         }
 
         [TestMethod]
-        public void exitBeforeEntryError()
+        public void case3()
         {
             HomePage page = new HomePage();
             page.selectLot("Short-Term Parking");
             page.setEntryCalendar("January", "2", "2014");
+            page.setExitCalendar("January", "1", "2014");
 
+            page.calculate();
+
+            string expected = "E​RROR! YOUR EXIT DATE OR TIME IS BEFORE YOUR ENTRY DATE OR TIME".Replace(((char)(8203)).ToString(), "");
+
+            Assert.AreEqual(page.getCost(), expected);        
+        }
+
+        [TestMethod]
+        // Entry time is after exit time
+        // Fails
+        public void case4()
+        {
+            HomePage page = new HomePage();
+            page.selectLot("Short-Term Parking");
+            page.setEntryTime("5:00");
+            page.setEntryAMPM("AM");
+            page.setEntryCalendar("January", "1", "2014");
+
+            page.setExitTime("4:00");
+            page.setExitAMPM("AM");
             page.setExitCalendar("January", "1", "2014");
             page.calculate();
 
-            Assert.IsTrue(page.getCost().Equals("E​RROR! YOUR EXIT DATE OR TIME IS BEFORE YOUR ENTRY DATE OR TIME"));        
+            string expected = "E​RROR! YOUR EXIT DATE OR TIME IS BEFORE YOUR ENTRY DATE OR TIME".Replace(((char)(8203)).ToString(), "");
+            Assert.AreEqual(page.getCost(), expected);
+
         }
-
-
     }
 }
