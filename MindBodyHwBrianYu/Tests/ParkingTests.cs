@@ -20,7 +20,7 @@ namespace MindBodyHwBrianYu
         [TestCleanup()]
         public void Teardown()
         {
-            //PageProperty.driver.Quit();
+            PageProperty.driver.Quit();
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@ namespace MindBodyHwBrianYu
 
             string expected = "​(0 Days, 1 Hours, 0 Minutes)".Replace(((char)(8203)).ToString(), "");
             Assert.AreEqual("$ 2.00", page.getCost());
-            Assert.AreEqual(page.getDuration(), expected);
+            Assert.AreEqual(expected, page.getCost());
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@ namespace MindBodyHwBrianYu
             string expected = "​(31 Days, 0 Hours, 0 Minutes)".Replace(((char)(8203)).ToString(), "");
 
             Assert.AreEqual("$ 270.00", page.getCost());
-            Assert.AreEqual(page.getDuration(), expected);
+            Assert.AreEqual(expected, page.getCost());
         }
 
         [TestMethod]
@@ -72,7 +72,7 @@ namespace MindBodyHwBrianYu
 
             string expected = "E​RROR! YOUR EXIT DATE OR TIME IS BEFORE YOUR ENTRY DATE OR TIME".Replace(((char)(8203)).ToString(), "");
 
-            Assert.AreEqual(page.getCost(), expected);        
+            Assert.AreEqual(expected, page.getCost());
         }
 
         [TestMethod]
@@ -112,7 +112,7 @@ namespace MindBodyHwBrianYu
 
             string expected = "​(0 Days, 0 Hours, 0 Minutes)".Replace(((char)(8203)).ToString(), "");
             Assert.AreEqual("$ 2.00", page.getCost());
-            Assert.AreEqual(page.getDuration(), expected);
+            Assert.AreEqual(expected, page.getCost());
         }
 
         [TestMethod]
@@ -131,7 +131,7 @@ namespace MindBodyHwBrianYu
             page.calculate();
 
             string expected = "E​RROR! YOUR EXIT DATE OR TIME IS INVALID!".Replace(((char)(8203)).ToString(), "");
-            Assert.AreEqual(page.getCost(), expected);
+            Assert.AreEqual(expected, page.getCost());
         }
 
         [TestMethod]
@@ -146,7 +146,7 @@ namespace MindBodyHwBrianYu
             page.calculate();
 
             string expected = "E​RROR! YOUR EXIT DATE OR TIME IS INVALID!".Replace(((char)(8203)).ToString(), "");
-            Assert.AreEqual(page.getCost(), expected); 
+            Assert.AreEqual(expected, page.getCost());
         }
 
 
@@ -166,7 +166,7 @@ namespace MindBodyHwBrianYu
             page.calculate();
 
             string expected = "E​RROR! YOUR EXIT DATE OR TIME IS INVALID!".Replace(((char)(8203)).ToString(), "");
-            Assert.AreEqual(page.getCost(), expected);
+            Assert.AreEqual(expected, page.getCost());
         }
 
         
