@@ -42,7 +42,7 @@ namespace MindBodyHwBrianYu
 
             string expected = "​(0 Days, 1 Hours, 0 Minutes)".Replace(((char)(8203)).ToString(), "");
             Assert.AreEqual("$ 2.00", page.getCost());
-            Assert.AreEqual(expected, page.getCost());
+            Assert.AreEqual(expected, page.getDuration());
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@ namespace MindBodyHwBrianYu
             string expected = "​(31 Days, 0 Hours, 0 Minutes)".Replace(((char)(8203)).ToString(), "");
 
             Assert.AreEqual("$ 270.00", page.getCost());
-            Assert.AreEqual(expected, page.getCost());
+            Assert.AreEqual(expected, page.getDuration());
         }
 
         [TestMethod]
@@ -112,7 +112,7 @@ namespace MindBodyHwBrianYu
 
             string expected = "​(0 Days, 0 Hours, 0 Minutes)".Replace(((char)(8203)).ToString(), "");
             Assert.AreEqual("$ 2.00", page.getCost());
-            Assert.AreEqual(expected, page.getCost());
+            Assert.AreEqual(expected, page.getDuration());
         }
 
         [TestMethod]
