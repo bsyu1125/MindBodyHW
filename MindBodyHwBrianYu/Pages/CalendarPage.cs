@@ -31,13 +31,13 @@ namespace MindBodyHwBrianYu
 
             while (diff < 0)
             {
-                backYear.Click();
+                forwardYear.Click();
                 diff++;
             }
 
             while (diff > 0)
             {
-                forwardYear.Click();
+                backYear.Click();
                 diff--;
             }
 

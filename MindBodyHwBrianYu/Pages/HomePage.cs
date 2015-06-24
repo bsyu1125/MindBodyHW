@@ -30,6 +30,12 @@ namespace MindBodyHwBrianYu
         [FindsBy(How = How.Name, Using = "ExitDate")]
         private IWebElement exitDate = null;
 
+        [FindsBy(How = How.Name, Using = "EntryTimeAMPM")]
+        private IList<IWebElement> entryTimeAMPM = null;
+
+        [FindsBy(How = How.Name, Using = "ExitTimeAMPM")]
+        private IList<IWebElement> exitTimeAMPM = null;
+
         [FindsBy(How = How.CssSelector, Using = "img[alt=\"Pick a date\"]")]
         private IList<IWebElement> calendarIcon = null;
 
@@ -41,6 +47,26 @@ namespace MindBodyHwBrianYu
 
         [FindsBy(How = How.CssSelector, Using = "span.BodyCopy > font > b")]
         private IWebElement duration = null;
+
+        public string getEntryTime()
+        {
+            return entryTime.GetAttribute("value");
+        }
+
+        public string getEntryDate()
+        {
+            return entryDate.GetAttribute("value");
+        }
+
+        public string getExitTime()
+        {
+            return exitTime.GetAttribute("value");
+        }
+
+        public string getExitDate()
+        {
+            return exitDate.GetAttribute("value");
+        }
 
         public string getCost()
         {
@@ -69,11 +95,6 @@ namespace MindBodyHwBrianYu
             exitTime.SendKeys(value);
         }
 
-        public string getEntryTime()
-        {
-            return entryTime.GetAttribute("value");
-        }
-
         public void calculate()
         {
             submit.Click();
@@ -81,28 +102,38 @@ namespace MindBodyHwBrianYu
 
         public void setEntryAMPM(string ampm)
         {
-            string entryAMPM = "EntryTimeAMPM";
             if (ampm.Equals("AM"))
             {
-                PageProperty.driver.FindElements(By.Name(entryAMPM))[0].Click();
+                entryTimeAMPM[0].Click();
             }
             else
             {
-                PageProperty.driver.FindElements(By.Name(entryAMPM))[1].Click();
+                entryTimeAMPM[1].Click();
             }
         }
 
         public void setExitAMPM(string ampm)
         {
-            string exitAMPM = "ExitTimeAMPM";
             if (ampm.Equals("AM"))
             {
-                PageProperty.driver.FindElements(By.Name(exitAMPM))[0].Click();
+                exitTimeAMPM[0].Click();
             }
             else
             {
-                PageProperty.driver.FindElements(By.Name(exitAMPM))[1].Click();
+                exitTimeAMPM[1].Click();
             }
+        }
+
+        public void setEntryDate(string date)
+        {
+            entryDate.Clear();
+            entryDate.SendKeys(date);
+        }
+
+        public void setExitDate(string date)
+        {
+            exitDate.Clear();
+            exitDate.SendKeys(date);
         }
 
         public void setEntryCalendar(string month, string day, string year)
